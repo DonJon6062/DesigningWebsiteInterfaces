@@ -1,0 +1,1 @@
+document.getElementById("jsLink").textContent = "This is the basic screen. My name is Don Jones. My school email is donjones/@uat.edu. I will be graduating May 2026. This is Javascript, however!";

@@ -41,3 +41,30 @@ h2
     text-align: center;
     font-weight: 200;
 }
+button
+{
+    /* center buttons */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* styling */
+    background-color: #000000;
+    color: #ffee00;
+    font-family: 'Courier New', Courier, monospace;
+}
+h3
+{
+    text-align: center;
+}
+#imgSlide
+{
+    /* dimensions */
+    width: 500px;
+    height: 300px;
+    /* center the image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* box shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

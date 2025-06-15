@@ -21,8 +21,14 @@
     </header>
     <!-- center stage -->
     <main>
-        <h2 id = "jsLink"> </h2> 
-        <script src="basicjavascript.js"></script>
+        <h2> 
+            <label for="movieInput">Enter Movie Name:</label>
+            <input type="text" id="movieInput" name = "movieInput" placeholder="Enter Movie Name:">
+            <button onclick="addMovie()">Add Movie</button>
+            <button onclick="clearMovies()">Clear Movies</button>
+            <div id = "movieList"></div>
+        </h2> 
+        <script src="basicInput.js"></script>
     </main>
 </body>
 </html>

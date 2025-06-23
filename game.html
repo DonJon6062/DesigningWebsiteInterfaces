@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- add stylesheet -->
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Game</title>
+</head>
+<body>
+    <main>
+        <!-- place items at top of screen -->
+        <header>
+            <!-- allow links to be added -->
+            <nav>
+                <!-- display link with style -->
+                <p>
+                    <!-- set link -->
+                    <a href="index.html">Go to the Index</a>
+                    <a href="basic_screen.html">Go to the Basic Screen</a>
+                </p>
+            </nav>
+        </header>
+        <h2> 
+            <!-- prompt user input -->
+            Please enter your starting stats!
+        </h2>
+        <h3>
+            <!-- label fields and define them -->
+            <label for="nameInput">Name:</label>
+            <input type="text" id="nameInput" placeholder="Type Name Here!">
+            <label>Health:</label> 
+            <input type="number" id="hpInput" placeholder="Type Health (#) Here!">
+            <label>Attack:</label>
+            <input type="number" id="atkInput" placeholder="Type Attack (#) Here!">
+            <label for="abilityInput">Ability:</label>
+            <input type="text" id="abilityInput" placeholder="Any Ability!">
+            <!-- allow user to enter stats -->
+            <button onclick="confirm()">Confirm</button>
+            <div id="stats"></div>
+            <script src="gameFunctionality.js"></script>
+        </h3>
+    </main>
+</body>
+</html>

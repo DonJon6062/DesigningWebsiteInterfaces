@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- add stylesheet -->
+    <link rel="stylesheet" href="crosswordStyle.css">
+    <title>Crossword</title>
+</head>
+<body>
+    <!-- place items at top of screen -->
+        <header>
+            <!-- allow links to be added -->
+            <nav>
+                <!-- display link with style -->
+                <p>
+                    <!-- set link -->
+                    <a href="basicScreen.html">Go to the Basic Screen</a>
+                    <a href="game.html">Go to the Game Setup</a>
+                    <a href="index.html">Go to the Index</a>
+                </p>
+            </nav>
+            <!-- tell the user what this page is -->
+            Crossword
+        </header>
+    <main>
+        <!-- dedicated area for table/clues -->
+        <section>
+            <!-- build the puzzle -->
+            <table id="crosswordTable"></table>
+        </section>
+        <section>
+            <!-- list clues -->
+            <h2>Left-to-Right</h2>
+                <ol id="crosswordClues">
+                    <li id="cafe" onclick="revealCafe()">A word for the color brown in some languages, a place to get coffee in others.</li>
+                    <li id="turquoise" onclick="revealTurquoise()">Color used to define the boundary between green and blue in color perception tests.</li>
+                    <li id="navy" onclick="revealNavy()">The color and the branch of military both involve a deep blue.</li>
+                    <li id="amber" onclick="revealAmber()">Color named after the fossilized sap of a tree.</li>
+                </ol>
+            <h2>Top-Down</h2>
+                <ol id="crosswordClues">
+                    <li id="orange" onclick="revealOrange()">The fruit that named a color.</li>
+                    <li id="rust" onclick="revealRust()">If you put iron in water, it'll slowly turn this color.</li>
+                    <li id="olo" onclick="revealOlo()">An imaginary color discovered in 2025, which is as blue-green as green-blue gets.</li>
+                    <li id="dandelion" onclick="revealDandelion()">A color of yellow that Crayola discontinued, then brought back for a limited time.</li>
+                </ol>
+        </section>
+        <script src="crosswordJS.js"></script>
+    </main>
+</body>
+</html>

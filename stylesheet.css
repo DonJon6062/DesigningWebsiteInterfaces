@@ -1,0 +1,99 @@
+body
+{
+    line-height: 2;
+    text-align: start;
+    overflow-wrap: break-word;
+    border-left: 100;
+    background-color: #ffe8c4;
+    font-family: 'Courier New', Courier, monospace;
+}
+p
+{
+    /* font */
+    color: #f8d092;
+    /* border */
+    background-color: #000000;
+    border-radius: 5px;
+}
+header
+{
+    /* border stuff */
+    background-color: #000000; 
+    padding: 5px; 
+    border-radius: 5px;
+    border: 5px dotted #ffffff;
+    margin-bottom: 5px;
+    /* font stuff */
+    color: #ffee00;
+    text-align: center;
+    font-weight: 100;
+}
+h2
+{
+    /* border stuff */
+    background-color: #000000; 
+    padding: 5px;
+    border-radius: 5px;
+    border: 5px dotted #ffffff;
+    /* font stuff */
+    color: #ffee00;
+    font-size: larger;
+    text-align: center;
+    font-weight: 200;
+}
+button
+{
+    /* center buttons */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* styling */
+    background-color: #000000;
+    color: #ffee00;
+    font-family: 'Courier New', Courier, monospace;
+}
+h3
+{
+    text-align: center;
+}
+a
+{
+    color: beige;
+}
+input
+{
+    font-family: 'Courier New', Courier, monospace;
+}
+#chessboard
+{
+    /* make board visible */
+    width: 400px;
+    height: 400px;
+    /* add some snazz */
+    border: 2px solid #010203;
+    border-radius: 2px;
+    /* make content as centered as possible */
+    margin: 0 auto;
+}
+.chessSquare
+{
+    /* make some squares */
+    width: 50px;
+    height: 50px;
+    /* put in the border */
+    float: left;
+    /* add some snazz */
+    background-color: #010203;
+}
+#imgSlide
+{
+    /* dimensions */
+    width: 500px;
+    height: 300px;
+    /* center the image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* box shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

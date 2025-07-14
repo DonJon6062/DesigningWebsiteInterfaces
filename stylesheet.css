@@ -64,7 +64,7 @@ input
 {
     font-family: 'Courier New', Courier, monospace;
 }
-#chessboard
+#checkerboard
 {
     /* make board visible */
     width: 400px;
@@ -75,7 +75,7 @@ input
     /* make content as centered as possible */
     margin: 0 auto;
 }
-.chessSquare
+.checkerSquare
 {
     /* make some squares */
     width: 50px;
@@ -84,6 +84,24 @@ input
     float: left;
     /* add some snazz */
     background-color: #010203;
+}
+.checkerPiece
+{
+    width: 55;
+    height: 55;
+    /* demo is 55, 55, 2.5 */
+    margin: 2.5; 
+    /* make round */
+    border-radius: 50%;
+}
+.checkerPiece-w
+{
+    /* made these odd colors to verify it's not being created */
+    background-color:goldenrod;
+}
+.checkerPiece-b
+{
+    background-color: blue;
 }
 #imgSlide
 {

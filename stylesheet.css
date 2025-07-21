@@ -51,6 +51,7 @@ button
     background-color: #000000;
     color: #ffee00;
     font-family: 'Courier New', Courier, monospace;
+    font-size: large;
 }
 h3
 {
@@ -87,8 +88,8 @@ input
 }
 .checkerPiece
 {
-    width: 55;
-    height: 55;
+    width: 50px;
+    height: 50px;
     /* demo is 55, 55, 2.5 */
     margin: 2.5; 
     /* make round */
@@ -102,6 +103,26 @@ input
 .checkerPiece-b
 {
     background-color: blue;
+}
+.hole
+{
+    width: 100px;
+    height: 100px;
+    margin: 2.5; 
+    /* make round */
+    border-radius: 50%;
+    /* make a nice shade of brown */
+    background-color: chocolate;
+}
+.mole
+{
+    width: 100px;
+    height: 100px;
+    margin: 2.5; 
+    /* make round */
+    border-radius: 50%;
+    /* make grey */
+    background-color: darkgrey;
 }
 #imgSlide
 {

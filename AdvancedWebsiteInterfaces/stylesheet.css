@@ -4,7 +4,7 @@ body
     text-align: start;
     overflow-wrap: break-word;
     border-left: 100;
-    background-color: #ffdac4;
+    background-color: #ffe8c4;
     font-family: 'Courier New', Courier, monospace;
 }
 p
@@ -51,10 +51,78 @@ button
     background-color: #000000;
     color: #ffee00;
     font-family: 'Courier New', Courier, monospace;
+    font-size: large;
 }
 h3
 {
     text-align: center;
+}
+a
+{
+    color: beige;
+}
+input
+{
+    font-family: 'Courier New', Courier, monospace;
+}
+#checkerboard
+{
+    /* make board visible */
+    width: 400px;
+    height: 400px;
+    /* add some snazz */
+    border: 2px solid #010203;
+    border-radius: 2px;
+    /* make content as centered as possible */
+    margin: 0 auto;
+}
+.checkerSquare
+{
+    /* make some squares */
+    width: 50px;
+    height: 50px;
+    /* put in the border */
+    float: left;
+    /* add some snazz */
+    background-color: #010203;
+}
+.checkerPiece
+{
+    width: 50px;
+    height: 50px;
+    /* demo is 55, 55, 2.5 */
+    margin: 2.5; 
+    /* make round */
+    border-radius: 50%;
+}
+.checkerPiece-w
+{
+    /* made these odd colors to verify it's not being created */
+    background-color:goldenrod;
+}
+.checkerPiece-b
+{
+    background-color: blue;
+}
+.hole
+{
+    width: 100px;
+    height: 100px;
+    margin: 2.5; 
+    /* make round */
+    border-radius: 50%;
+    /* make a nice shade of brown */
+    background-color: chocolate;
+}
+.mole
+{
+    width: 100px;
+    height: 100px;
+    margin: 2.5; 
+    /* make round */
+    border-radius: 50%;
+    /* make grey */
+    background-color: darkgrey;
 }
 #imgSlide
 {

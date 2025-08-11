@@ -1,0 +1,107 @@
+a
+{
+    color: beige;
+}
+body
+{
+    line-height: 2;
+    background-color: #ffe8c4;
+    font-family: 'Courier New', Courier, monospace;
+}
+button
+{
+
+    /* styling */
+    background-color: #010203;
+    color: #ffee00;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: larger;
+}
+footer
+{
+    text-align: center;
+}
+h1
+{
+    text-align: center;
+}
+h2
+{
+    /* border stuff */
+    background-color: #010203; 
+    padding: 5px;
+    border-radius: 5px;
+    border: 5px dotted #ffffff;
+    /* font stuff */
+    color: #ffee00;
+    font-size: larger;
+    text-align: center;
+    font-weight: 200;
+}
+h3
+{
+    text-align: center;
+}
+header
+{
+    /* border stuff */
+    background-color: #010203; 
+    padding: 5px; 
+    border-radius: 5px;
+    border: 5px dotted #ffffff;
+    margin-bottom: 5px;
+    /* font stuff */
+    color: #ffee00;
+    text-align: center;
+    font-weight: 100;
+}
+p
+{
+    /* font */
+    color: #010203;
+}
+section
+{
+    align-content: center;
+}
+table, tr
+{
+    /* prevent table from being pushed offsceen */
+    min-width: 400px;
+    padding: 0;
+    /* make content as centered as possible */
+    margin: 0 auto;
+}
+td
+{
+    /* make boxes */
+    background-color: #f8d092;
+    color: #010203;
+    border: 2px solid #f8d092;
+    border-radius: 2px;
+    padding: 1px;
+    width: 40px;
+    height: 60px;
+    vertical-align: middle;
+    /* manage text */
+    text-align: center;
+    /* align numbers */
+    position: relative;
+}
+.scoreSheet
+{
+    /* place a score sheet on the end of the screen */
+    height: auto;
+    width: auto;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    /* prevent it from intersecting with header */
+    top: 100px;
+}
+.userInformation
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- add stylesheet -->
+    <link rel="stylesheet" href="blindDiceStylesheet.css">
+    <title>Blind Dice</title>
+</head>
+<body>
+    <!-- place items at top of screen -->
+        <header>
+            <!-- allow links to be added -->
+            <nav>
+                <!-- display link with style -->
+                <p>
+                    <!-- set link -->
+                    <a href="basicScreen.html">Go to the Basic Screen</a>
+                    <a href="checkerboard.html">Go to the Checkerboard</a>
+                    <a href="crossword.html">Go to Crossword</a>
+                    <a href="game.html">Go to the Game Setup</a>
+                    <a href="index.html">Go to the Index</a>
+                </p>
+            </nav>
+        </header>
+    <main>
+        <h1>
+            <!-- display round number -->
+            <span id="spanRound"></span><br>
+            <!-- display current guesser -->
+            <span id="spanPlayerTurn"></span><br>
+            <!-- display current guess -->
+            <span id="spanGuess"></span>
+        </h1>
+        <div class="scoreSheet">
+            <!-- points and players -->
+            <table>
+            <tr>
+                <th>Player</th>
+                <th>Points</th>
+            </tr>
+            <!-- values -->
+            <tr>
+                <td>User</td>
+                <td><span id="userPoints"></span></td>
+            </tr>
+            <tr>
+                <td>Brainac</td>
+                <td><span id="brainiacPoints"></span></td>
+            </tr>
+            <tr>
+                <td>Coward</td>
+                <td><span id="cowardPoints"></span></td>
+            </tr>
+            <tr>
+                <td>Risk-Taker</td>
+                <td><span id="riskTakerPoints"></span></td>
+            </tr>
+            </table>
+        </div>
+        <section>
+            <!-- brainac current action -->
+            <span id="brainiacAction"></span><br>
+            <!-- where the dice board goes -->
+            <table id="brainiacDiceBoard"></table>
+            <!-- coward current action -->
+            <span id="cowardAction"></span><br>
+            <!-- where the dice board goes -->
+            <table id="cowardDiceBoard"></table>
+            <!-- risk taker current action -->
+            <span id="riskTakerAction"></span><br>
+            <!-- where the dice board goes -->
+            <table id="riskTakerDiceBoard"></table>
+        </section>
+        <section class="userInformation">
+            <!-- where the user puts their guess; &nbsp; for spaces in between text -->
+            <input type="number" id="diceNumber" placeholder="Number of Dice"><label for id="diceFace">&nbsp;dice with a value of&nbsp;</label><input type="number" id="diceFace" placeholder="Dice Face Value"><button onclick="submit();">Submit</button>
+        </section>
+        <section>
+            <!-- where the dice board goes -->
+            <table id="userDiceBoard"></table>
+        </section>
+        <!-- functionality -->
+        <script src="blindDiceJS.js"></script>
+    </main>
+    <footer>
+        <p><button onclick="reroll();">Re-Roll</button></p>
+        <!-- <span id="rerollChances"></span> <- if there's time, try again with this -->
+        <p>There are 20 die on the table.</p><p>The game ends when one player has 10 points.</p><p>You can reroll 3 times. You cannot reroll after the round starts until the round is over. Rerolls do not come back.</p>
+        <p>Guesses must fufill one of two conditions:</p><p>-More Dice</p><p>-Higher Face Value</p>
+    </footer>
+</body>
+</html>

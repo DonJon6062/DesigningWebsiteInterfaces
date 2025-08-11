@@ -1,0 +1,115 @@
+a
+{
+    color: beige;
+}
+body
+{
+    line-height: 2;
+    text-align: start;
+    overflow-wrap: break-word;
+    border-left: 100;
+    background-color: #ffe8c4;
+    font-family: 'Courier New', Courier, monospace;
+}
+button
+{
+    /* center buttons */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* styling */
+    background-color: #010203;
+    color: #ffee00;
+    font-family: 'Courier New', Courier, monospace;
+}
+h2
+{
+    /* border stuff */
+    background-color: #010203; 
+    padding: 5px;
+    border-radius: 5px;
+    border: 5px dotted #ffffff;
+    /* font stuff */
+    color: #ffee00;
+    font-size: larger;
+    text-align: center;
+    font-weight: 200;
+}
+h3
+{
+    text-align: center;
+}
+header
+{
+    /* border stuff */
+    background-color: #010203; 
+    padding: 5px; 
+    border-radius: 5px;
+    border: 5px dotted #ffffff;
+    margin-bottom: 5px;
+    /* font stuff */
+    color: #ffee00;
+    text-align: center;
+    font-weight: 100;
+}
+input
+{
+    width: 90%;
+    height: 90%;
+    border: none;
+    text-align: center;
+    margin: 0 auto;
+    font-family: 'Courier New', Courier, monospace;
+    color: #010203;
+    background-color: #ffe8c4;
+    font-weight: bold;
+}
+p
+{
+    /* font */
+    color: #f8d092;
+    /* border */
+    background-color: #010203;
+    border-radius: 5px;
+}
+table, tr
+{
+    /* prevent table from being pushed offsceen */
+    min-width: 600px;
+    padding: 0;
+    /* make content as centered as possible */
+    margin: 0 auto;
+}
+td
+{
+    /* make boxes */
+    background-color: #f8d092;
+    color: #010203;
+    border: 2px solid #f8d092;
+    border-radius: 2px;
+    padding: 1px;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    /* manage text */
+    text-align: center;
+    /* align numbers and letters */
+    position: relative;
+}
+.clueNum
+{
+    position: absolute;
+    font-size: 10px;
+    top: 1px;
+    left: 1px;
+    font-weight: bold;
+    color: #010203;
+}
+li:hover
+{
+    /* change cursor when hovering*/
+    cursor: pointer;
+    /* tint background slightly */
+    /* background-color: #ff9d005e; */
+    background-color: #f8d092;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- add stylesheet -->
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Whack-A-Mole</title>
+</head>
+<body>
+    <main>
+        <!-- place items at top of screen -->
+        <header>
+            <!-- allow links to be added -->
+            <nav>
+                <!-- display link with style -->
+                <p>
+                    <!-- set link -->
+                    <a href="basicScreen.html">Go to the Basic Screen</a>
+                    <a href="blindDice.html">Go to Blind Dice</a>
+                    <a href="chessboard.html">Go to the Chessboard</a>
+                    <a href="crossword.html">Go to Crossword</a>
+                    <a href="index.html">Go to the Index</a>
+                </p>
+            </nav>
+        </header>
+        <h3>
+            <!-- display score -->
+            <p>Score:<span id="spanScore"></span></p>
+            <!-- where the holes go -->
+            <div id="divBoard">
+                <!-- make holes -->
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+            </div>
+            <button onclick="startGame()">Start!</button>
+            <script src="gameFunctionality.js"></script>
+        </h3>
+    </main>
+</body>
+</html>

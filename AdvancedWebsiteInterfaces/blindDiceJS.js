@@ -1,179 +1,188 @@
+// var to track total number of rounds
+let rounds = 1;
+const ROUND_DISPLAY = document.getElementById("spanRound");
 //array to track whose turn it is
-let playerTurn = ["user", "brainac", "coward", "riskTaker"];
+let playerTurn = ["User", "Brainac", "Coward", "Risk-Taker"];
+// variable to track turns taken
+let currentTurn = 1;
+// the round starts on the latest winner, but baseline is the user
+let startingPlayer;
+let currentPlayer;
+let currentPlayerName;
+let winner;
+// var to display player turn
+const PLAYER_TURN_DISPLAY = document.getElementById("spanPlayerTurn");
+// var to display current guess
+const GUESS_DISPLAY = document.getElementById("spanGuess");
 // min and max vals for dice face
-let minFaceVal = 1; 
-let maxFaceVal = 6;
+const MIN_FACE_VAL = 1; 
+const MAX_FACE_VAL = 6;
 // min and max dice count vals
-let minDiceNum = 1;
-let maxDiceNum = 20;
-//master array for all rolled die faces
-let allDice = [];
-// number of dice per player
-let playerDiceNum = 5;
-//arrays to hold the individual players' dice
-let userDice = [];
-let brainiacDice = [];
-let cowardDice = [];
-let riskTakerDice = [];
-// track players' points
-let userPoints = 0;
-let brainiacPoints = 0;
-let cowardPoints = 0;
-let riskTakerPoints = 0;
+const MIN_DICE_NUM = 1;
+const MAX_DICE_NUM = 20;
 //variables for the dice number and face value guessed
-let startingDiceNumber = 0;
-let startingFaceValue = 0;
+const BASE_DICE_NUM = 0;
+const BASE_FACE_VAL = 0;
 let currentDiceNum = 0;
 let currentFaceVal = 0;
-// variable to track turns taken
-let turns = 0;
-// var to track total number of rounds
-let roundDisplay = document.getElementById("spanRound");
-let rounds = 0;
+//master array for all rolled die faces
+let allDiceArray = [];
+//arrays to hold the individual players' dice
+let diceArrayUser = [];
+let diceArrayBrainac = [];
+let diceArrayCoward = [];
+let diceArrayRiskTaker = [];
+// number of dice per player
+const PLAYER_DICE_NUM = 5;
+// track players' points
+let pointsUser = 0;
+const POINTS_DISPLAY_USER = document.getElementById("spanUserPoints");
+let pointsBrainac = 0;
+const POINTS_DISPLAY_BRAINIAC = document.getElementById("spanBrainiacPoints");
+let pointsCoward = 0;
+const POINTS_DISPLAY_COWARD = document.getElementById("spanCowardPoints");
+let pointsRiskTaker = 0;
+const POINTS_DISPLAY_RISK_TAKER = document.getElementById("spanRiskTakerPoints");
 // vars for all dice boards
-let brainiacDiceBoard = document.getElementById("brainiacDiceBoard");
-let cowardDiceBoard = document.getElementById("cowardDiceBoard");
-let riskTakerDiceBoard = document.getElementById("riskTakerDiceBoard");
-let userDiceBoard = document.getElementById("userDiceBoard");
+const DICE_BOARD_USER = document.getElementById("userDiceBoard");
+const DICE_BOARD_BRAINAIC = document.getElementById("brainiacDiceBoard");
+const DICE_BOARD_COWARD = document.getElementById("cowardDiceBoard");
+const DICE_BOARD_RISK_TAKER = document.getElementById("riskTakerDiceBoard");
 // vars for all players action statements
-let brainiacAction = document.getElementById("brainiacAction");
-let cowardAction = document.getElementById("cowardAction");
-let riskTakerAction = document.getElementById("riskTakerAction");
+const ACTION_USER = document.getElementById("spanUserAction")
+const ACTION_BRAINIAC = document.getElementById("spanBrainiacAction");
+const ACTION_COWARD = document.getElementById("spanCowardAction");
+const ACTION_RISK_TAKER = document.getElementById("spanRiskTakerAction");
+// buttons for accusing other players
+const ACCUSE_BRAINIAC = document.getElementById("accuseBrainiac");
+const ACCUSE_COWARD = document.getElementById("accuseCoward");
+const ACCUSE_RISK_TAKER = document.getElementById("accuseRiskTaker");
 // vars for user inputs 
-let userGuessDiceNumber = document.getElementById("diceNumber");
-let userGuessFaceValue = document.getElementById("diceFace");
-let baseRerollAttempts = 3;
-let currentRerollAttempts = 3;
-let rerollChances = document.getElementById("rerollChances");
-// var to display guess
-let guessDisplay = document.getElementById("spanGuess");
+const GUESS_DICE_NUM = document.getElementById("inputDiceNum");
+const GUESS_FACE_VAL = document.getElementById("inputFaceVal");
+const GUESS_BUTTON = document.getElementById("userGuessButton");
+// vars for rerolling
+let baseRerollAttempts = 5;
+let currentRerollAttempts;
+const REROLL_CHANCES_DISPLAY = document.getElementById("spanRerollChances");
 
-// update number of rounds
-function roundCount(rounds)
+// basic update function for non variable intense changes
+function updateInnerHTML(span, variable)
 {
-    // make rounds display
-    roundDisplay.innerHTML = "Round " + rounds;
+    span.innerHTML = variable;
 }
 
-// give players dice, reset turns, rerolls and guess values
-function roundStart()
+// state guess of opponents (has many vars)
+function displayGuess(display, player)
 {
-    // empty the all array
-    for(element in allDice)
+    // if it isn't the players' turn, display that they are waiting
+    display.innerHTML = player + " guessed " + currentDiceNum + " dice with a value of " + currentFaceVal + ".";
+    updateGuess();
+}
+
+// display claimed diceNum and faceVal (has many vars)
+function updateGuess()
+{
+    // base statement string
+    let baseStatement = currentDiceNum + " dice with a value of " + currentFaceVal + "."
+    GUESS_DISPLAY.innerHTML = baseStatement;
+}
+
+// advance turns; prevent the turn from being in constantly updatedfrom the update function: every time it returns to the original player, advance currentTurns
+function advanceTurn()
+{
+    // if the current player IS the last player
+    if(currentPlayer == playerTurn.length - 1)
     {
-        allDice.pop();
+        // go back to the beginning of the array (0)
+        currentPlayer = 0;
     }
-    // give all players their fresh dice
-    rollDice(brainiacDice, brainiacDiceBoard);
-    rollDice(cowardDice, cowardDiceBoard);
-    rollDice(riskTakerDice, riskTakerDiceBoard);
-    rollDice(userDice, userDiceBoard);
-    // reset turns
-    turns = 0;
-    // reset rerolls
-    currentRerollAttempts = baseRerollAttempts;
-    // display reroll chances (claiming this is null)
-    //rerollChances.innerHTML = currentRerollAttempts;
-    // reset guess values
-    currentDiceNum = startingDiceNumber;
-    currentFaceVal = startingFaceValue;
-    // to ensure numbers are generating correctly
-    console.log("Brainiac Dice: " + brainiacDice.toString());
-    console.log("Coward Dice: " + cowardDice.toString());
-    console.log("Risk Taker Dice: " + riskTakerDice.toString());
-    console.log("User Dice: " + userDice.toString());
-    // sort and print the all array
-    allDice.sort();
-    console.log("All Dice: " + allDice.toString());
-    console.log("All Dice contains " + allDice.length + " dice.")
+    else
+    {
+        // go to next player
+        currentPlayer++; 
+    }
+    // if the player is the player that started the round
+    if(currentPlayer == startingPlayer)
+    {
+        // add 1 to the turn count
+        currentTurn++;
+        // display turn count
+        console.log("Turn " + currentTurn);
+    }
+    // display current player
+    console.log(playerTurn[currentPlayer]);
+    updateInnerHTML(PLAYER_TURN_DISPLAY, playerTurn[currentPlayer]);
 }
 
 //give array a set of random dice, and add the totals to the all array
-function rollDice(playerDice, playerDiceBoard)
+function rollDice(playerDiceArray, playerDiceBoard)
 {
     // ensure array is empty
-    for(i = 0; i < playerDiceNum; i++)
+    while(playerDiceArray.length > 0)
     {
-        playerDice.pop();
+        playerDiceArray.pop();
     }
     //give player a random hand AND add all dice to the all array
-    for(i = 0; i < playerDiceNum; i++)
+    for(i = 0; i < PLAYER_DICE_NUM; i++)
     {
-        // generate 20 random values between 1 and 6, then add it to the all array
-        let randomNum = Math.floor(Math.random() * (maxFaceVal - minFaceVal + 1)) + minFaceVal;
+        // generate 5 random values between 1 and 6, then add it to the all array
+        let randomNum = Math.floor(Math.random() * (MAX_FACE_VAL - MIN_FACE_VAL + 1)) + MIN_FACE_VAL;
         // place 5 dice with this player
-        playerDice.push(randomNum);
-        allDice.push(randomNum);
+        playerDiceArray.push(randomNum);
+        allDiceArray.push(randomNum);
     }
-    playerDice.sort();
-    // so that when dice are placed in it's ordered least to most
-    playerDice.reverse();
+    // organize the numbers for readability
+    playerDiceArray.sort();
+    // so that when dice are placed in the dice board they are ordered least to most
+    playerDiceArray.reverse();
     // create row for the dice to be placed
-    let singleDice = playerDiceBoard.insertRow(0);
-    // for each dice
-    for(let i = 0; i < playerDiceNum; i++)
+    let board = playerDiceBoard.insertRow(0);
+    // for each dice, place a value
+    for(let i = 0; i < PLAYER_DICE_NUM; i++)
     {
         // hide dice for now
-        singleDice.insertCell(0).innerHTML = "?";
+        board.insertCell(0).innerHTML = "?";
     }
 }
 
 //remove the dice the user previously had from the players' array and the all array
-function removeDice(diceArray, diceToRemove)
+function removeDice(playerDiceArray, diceToRemove)
 {
-    // thanks to geeksforgeeks for helping me understand splice!
-    const index = diceArray.indexOf(diceToRemove);
+    // thanks to geeksforgeeks for helping me understand splice! this ensures the all array doesn't have values that should be removed.
+    const index = playerDiceArray.indexOf(diceToRemove);
     if (index !== -1) {
-        diceArray.splice(index, 1);
+        playerDiceArray.splice(index, 1);
     };
 }
 
-// remove the dice the user previously had from the users' array and the all array, then roll the dice
+// remove the dice the user previously had from the users' array and the all array, then roll the dice, if the player can still reroll
 function reroll()
 {
     // as long as the user can reroll and the game hasn't started
-    if(currentRerollAttempts > 0 && currentDiceNum == startingDiceNumber && currentFaceVal == startingFaceValue)
+    if(currentRerollAttempts > 0 && currentDiceNum == BASE_DICE_NUM && currentFaceVal == BASE_FACE_VAL)
     {
         // delete current data
-        userDiceBoard.deleteRow(0);
+        DICE_BOARD_USER.deleteRow(0);
         // locate and remove each element from the all and user array
-        userDice.forEach(element => {
+        diceArrayUser.forEach(element => {
             // display dice to remove
-            console.log("Removing " + element);
-            removeDice(allDice, element);
+            removeDice(allDiceArray, element);
         });
+        // to check old values are being removed
+        console.log("User Dice: " + diceArrayUser.toString() + "\n" + "User Dice contains " + diceArrayUser.length + " dice." + "\n" + "All Dice: " + allDiceArray.toString() + "\n" + "All Dice contains " + allDiceArray.length + " dice.");
         // give user new dice
-        rollDice(userDice, userDiceBoard);
+        rollDice(diceArrayUser, DICE_BOARD_USER);
         // display new dice
-        revealDice(userDice, userDiceBoard);
+        revealDice(diceArrayUser, DICE_BOARD_USER);
         // to check new values are being given
-        console.log("User Dice: " + userDice.toString());
-        console.log("User Dice contains " + userDice.length + " dice.");
+        console.log("User Dice: " + diceArrayUser.toString() + "\n" + "User Dice contains " + diceArrayUser.length + " dice.");
         // display number of dice in all dice array
-        allDice.sort();
-        console.log("All Dice: " + allDice.toString());
-        console.log("All Dice contains " + allDice.length + " dice.");
+        allDiceArray.sort();
+        console.log("All Dice: " + allDiceArray.toString() + "\n" + "All Dice contains " + allDiceArray.length + " dice.");
         currentRerollAttempts--;
+        updateInnerHTML(REROLL_CHANCES_DISPLAY, currentRerollAttempts);
     }
-}
-
-// verify whether or not the guess is valid
-function validGuess(currentDiceNum, currentFaceVal, playerFaceVal, playerDiceNum)
-{    
-    // verify whether or not a guess is valid
-    let isValidGuess = false;
-    // check guess is within limits of reality (dice rolls are 1-6, there are a total of 20 dice)
-    if(playerFaceVal > currentFaceVal && playerFaceVal <= maxFaceVal && playerFaceVal >= minFaceVal || playerDiceNum > currentDiceNum && playerDiceNum <= maxDiceNum && playerDiceNum >= minDiceNum) 
-    {
-        isValidGuess = true; 
-        currentDiceNum = playerDiceNum;
-        currentFaceVal = playerFaceVal;
-        return isValidGuess;
-    }
-    else
-    {
-        return isValidGuess;
-    } 
 }
 
 //display dice
@@ -181,157 +190,435 @@ function revealDice(playerDice, playerDiceBoard)
 {
     playerDiceBoard.deleteRow(0);
     // create row for the dice to be placed
-    let singleDice = playerDiceBoard.insertRow(0);
+    let board = playerDiceBoard.insertRow(0);
     // for each dice
-    for(let i = 0; i < playerDiceNum; i++)
+    for(let i = 0; i < PLAYER_DICE_NUM; i++)
     {
         // place the dice in the board
-        singleDice.insertCell(0).innerHTML = playerDice[i];
+        board.insertCell(0).innerHTML = playerDice[i];
     }
 }
 
-function roundEnd(currentDiceNum, currentFaceVal, accusingPlayer, currentPlayer)
+// hide all accuse buttons, then enable the button for the current player
+function hideButtons()
 {
+    // set all buttons to disabled
+    ACCUSE_BRAINIAC.style.visibility = 'hidden';
+    ACCUSE_COWARD.style.visibility = 'hidden';
+    ACCUSE_RISK_TAKER.style.visibility = 'hidden';
+    GUESS_BUTTON.style.visibility = 'hidden';
+}
+
+// enable button with ID passed through
+function enableButton(buttonID)
+{
+    // set style to visible
+    buttonID.style.visibility = 'visible';
+}
+
+// check count of dice
+function amountOfValue(diceArray, faceValue)
+{
+    // get amount of passed face value
+    return diceArray.filter(x => x === faceValue).length;
+};
+
+// give players dice, reset turns, set starting player
+function roundStart()
+{
+    // empty all dice array (doing this in rollDice causes weird errors, but is fine here!)
+    allDiceArray = [];
+    // reset turns
+    currentTurn = 1;
+    // hide buttons
+    hideButtons();
+    // give all players their fresh dice; not in roll dice because that's also called when the user rerolls
+    rollDice(diceArrayBrainac, DICE_BOARD_BRAINAIC);
+    rollDice(diceArrayCoward, DICE_BOARD_COWARD);
+    rollDice(diceArrayRiskTaker, DICE_BOARD_RISK_TAKER);
+    rollDice(diceArrayUser, DICE_BOARD_USER);
+    // to ensure numbers are generating correctly
+    console.log("Brainiac Dice: " + diceArrayBrainac.toString() + "\n" + "Coward Dice: " + diceArrayCoward.toString() + "\n" + "Risk Taker Dice: " + diceArrayRiskTaker.toString() + "\n" + "User Dice: " + diceArrayUser.toString());
+    // sort and print the all array
+    allDiceArray.sort();
+    console.log("All Dice: " + allDiceArray.toString() + "\n" + "All Dice contains " + allDiceArray.length + " dice.")
+}
+
+function callout(accuserName)
+{
+    // string template for evaluation statement
+    function baseStatement(name)
+    {
+        return name + " is correct! There is " + validDice + " " + currentFaceVal + "'s!";
+    }
     // var for number of valid dice
-    let validDice = 0;
-    allDice.forEach(element => {
-        // count dice of correct value
-        if(element == currentFaceVal)
-        {
-            validDice++;
-        }
-    });
-    revealDice(brainiacDice, brainiacDiceBoard);
-    revealDice(cowardDice, cowardDiceBoard);
-    revealDice(riskTakerDice, riskTakerDiceBoard);
-    // if there are more or equal valid dice
+    let validDice = amountOfValue(allDiceArray, currentFaceVal);
+    revealDice(diceArrayBrainac, DICE_BOARD_BRAINAIC);
+    revealDice(diceArrayCoward, DICE_BOARD_COWARD);
+    revealDice(diceArrayRiskTaker, DICE_BOARD_RISK_TAKER);
+    currentPlayerName = playerTurn[currentPlayer].toString();
+    // based on whose turn it is, change who is registered as the player
     if(validDice >= currentDiceNum)
     {
-        // the current player is correct if there are enough dice of the value
-        alert(currentPlayer.toUppercase() + " is correct!");
-        let playerPoint = currentPlayer + "Points";
-        playerPoint ++;
+        // check which player gets points; state winner
+        if(currentPlayerName == playerTurn[0])
+        {
+            // display information
+            alert(baseStatement(currentPlayerName.toString()));
+            winner = 0;
+            pointsUser++;
+            updateInnerHTML(POINTS_DISPLAY_USER, pointsUser);
+        }
+        if(currentPlayerName == playerTurn[1])
+        {
+            // display information
+            alert(baseStatement(currentPlayerName.toString()));
+            winner = 1;
+            pointsBrainac++;
+            updateInnerHTML(POINTS_DISPLAY_BRAINIAC, pointsBrainac);
+        }
+        if(currentPlayerName == playerTurn[2])
+        {
+            // display information
+            alert(baseStatement(currentPlayerName.toString()));
+            winner = 2;
+            pointsCoward++;
+            updateInnerHTML(POINTS_DISPLAY_COWARD, pointsCoward);
+        }
+        if(currentPlayerName == playerTurn[3])
+        {
+            // display information
+            alert(baseStatement(currentPlayerName.toString()));
+            winner = 3;
+            pointsRiskTaker++; 
+            updateInnerHTML(POINTS_DISPLAY_RISK_TAKER, pointsRiskTaker);
+        }
     }
-    // or they lose
     else
     {
-        // the accusing player is correct if there are not enough valid dice
-        alert(accusingPlayer.toUppercase() + " is correct!");
-        let playerPoint = accusingPlayer + "Points";
-        playerPoint ++;
+        //check which player gets points; state winner
+        if(accuserName == playerTurn[0])
+        {
+            // display information
+            alert(baseStatement(accuserName.toString()));
+            winner = 0;
+            pointsUser++;
+            updateInnerHTML(POINTS_DISPLAY_USER, pointsUser);
+        }
+        if(accuserName == playerTurn[1])
+        {
+            // display information
+            alert(baseStatement(accuserName.toString()));
+            winner = 1;
+            pointsBrainac++;
+            updateInnerHTML(POINTS_DISPLAY_BRAINIAC, pointsBrainac);
+        }
+        if(accuserName == playerTurn[2])
+        {
+            // display information
+            alert(baseStatement(accuserName.toString()));
+            winner = 2;
+            pointsCoward++;
+            updateInnerHTML(POINTS_DISPLAY_COWARD, pointsCoward);
+        }
+        if(accuserName == playerTurn[3])
+        {
+            // display information
+            alert(baseStatement(accuserName.toString()));
+            winner = 3;
+            pointsRiskTaker++; 
+            updateInnerHTML(POINTS_DISPLAY_RISK_TAKER, pointsRiskTaker);
+        }
     }
-    // check whether or not the current guess is correct
+    // update round count
     rounds++;
-    roundCount(rounds);
+    updateInnerHTML(ROUND_DISPLAY, rounds);
+    // show whose turn it is
+    // set current player to winner
+    currentPlayer = winner;
+    currentPlayerName = playerTurn[currentPlayer].toString();
+    updateInnerHTML(PLAYER_TURN_DISPLAY, currentPlayerName);
+    // reset guess values
+    currentDiceNum = BASE_DICE_NUM;
+    currentFaceVal = BASE_FACE_VAL;
 }
 
+// brainiac code
 function brainiacGuess()
 {
-    // The Brainiac will attempt to guess using their lowest frequency dice number. They will call out another player if they claim 8 or more dice are the same face value.
-    // if this player is starting (as shown by the starting variables being 0), guess (least frequent die), 2
+    // The Brainiac will attempt to guess using their lowest frequency dice number.
+    revealDice(diceArrayBrainac, DICE_BOARD_BRAINAIC);
+    // place array in order
+    diceArrayBrainac.sort();
+    // guess 1-3 more than the smallest value in hand
+    let varience = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+    // if this player is starting (as shown by the starting variables being 0), guess (least frequent die) thrice
     if(currentDiceNum == 0 && currentFaceVal == 0)
     {
-        // this players' base guess
-        brainiacDice.filter();
+        // get smallest value in array
+        let smallestValue = diceArrayBrainac[0];
+        // get amount of smallest value
+        let smallestValueAmount = amountOfValue(diceArrayBrainac, smallestValue);
+        // update values
+        currentDiceNum = smallestValueAmount + varience;
+        currentFaceVal = smallestValue;
     }
-    // if not, raise dice num by 1 and, if possible, the next valid face value they see
+    else
+    {
+        // check if current face value is in array
+        if(diceArrayBrainac.includes(currentFaceVal))
+        {
+            // get amount of the value
+            let frequency = amountOfValue(diceArrayBrainac, currentFaceVal);
+            // increase the value by how many they see and a random number; add current number to keep it valid.
+            currentDiceNum = currentDiceNum + frequency;
+        }
+        else
+        {
+            // increase the face value if possible
+            if(currentFaceVal < 6)
+            {
+                currentFaceVal++;
+                currentDiceNum = varience;
+            }
+            else
+            {
+                currentDiceNum = currentDiceNum + varience;
+            }
+        }
+    }
+    displayGuess(ACTION_BRAINIAC, playerTurn[1]);
+    hideButtons();
+    enableButton(ACCUSE_BRAINIAC);
+    updateGuess();
 }
 
+function brainacCallout()
+{
+    // if more than 8 die is claimed
+    if(currentDiceNum > 8)
+    {
+        // call out next player
+        currentPlayerName = playerTurn[currentPlayer].toString();
+        alert("Brainiac called out " + currentPlayerName + "!");
+        callout(playerTurn[1]);
+    }
+}
+
+// coward code
 function cowardGuess()
 {
-    // The Coward will baseline guess one dice with a value of one. Their guess will increase dice number before face value, in increments of one. They will only call out another player after five turns without claims have passed, regardless of what the guess is.
     // if this player is starting (as shown by the starting variables being 0), guess 1,1
     if(currentDiceNum == 0 && currentFaceVal == 0)
     {
         // this players' base guess
         currentDiceNum = 1;
         currentFaceVal = 1;
-        return [1,1];
     }
-    // otherwise, add 1 to either value
+    else
+    {
+        // otherwise, add 1 to either value, randomly (as long as it would still be valid)
+        if(currentFaceVal < 6)
+        {
+            // 50/50 between adding 1 to either value
+            let randomNum = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+            if(randomNum == 1)
+            {
+                // add 1 to current diceNum
+                currentDiceNum++;
+            }
+            else
+            {
+                // add 1 to current faceVal
+                currentFaceVal++;
+            }
+        }
+        else
+        {
+            currentDiceNum++;
+        }
+    }
+    displayGuess(ACTION_COWARD, playerTurn[2]);
+    hideButtons();
+    enableButton(ACCUSE_COWARD);
+    updateGuess();
 }
 
+function cowardCallout()
+{
+    // if more than 6 turns have passed and it is NOT their turn
+    if(currentTurn > 6)
+    {
+        // callout current player
+        currentPlayerName = playerTurn[currentPlayer].toString();
+        alert("Coward called out " + currentPlayerName + "!");
+        callout(playerTurn[2]);
+    }
+}
+
+// risk taker code
 function riskTakerGuess()
 {
-    // The Risk-Taker has a baseline guess of three dice with a value of four. They will increase the face value by 2 until it's at 6, at which point it will do the same for the dice number. They have a 1/10 chance after the third turn to call out any opponent.
     // if this player is starting (as shown by the starting variables being 0), guess 3,4
     if(currentDiceNum == 0 && currentFaceVal == 0)
     {
         // this players' base guess
         currentDiceNum = 3;
         currentFaceVal = 4;
-        return [3,4];
-    }
-    // otherwise, raise face by 2 until max, then dice number by 2 until round ends
-    if(currentFaceVal < 6)
-    {
-        let riskTakerFaceGuess = currentFaceVal + 2;
-        if(riskTakerFaceGuess > 6)
-        {
-            riskTakerFaceGuess = 6;
-        }
-        // return adjusted face value
-        return [currentDiceNum, riskTakerFaceGuess];
     }
     else
     {
-        // add 2 to the current dice number
-        let riskTakerDiceNumGuess = currentDiceNum + 2;
-        // return adjusted dice number
-        return [riskTakerDiceNumGuess, currentFaceVal];
+        // otherwise, raise face by 2 until max, then dice number by 2 until round ends
+        if(currentFaceVal < 6)
+        {
+            currentFaceVal += 2;
+            if(currentFaceVal > 6)
+            {
+                currentFaceVal = 6;
+            }
+        }
+        else
+        {
+            // add 2 to the current dice number
+            currentDiceNum += 2;
+        }
     }
+    displayGuess(ACTION_RISK_TAKER, playerTurn[3]);
+    hideButtons();
+    enableButton(ACCUSE_RISK_TAKER);
+    updateGuess();
 }
 
-function userCallout(currentPlayer)
+function riskTakerCallout()
 {
-    // call out next player
-    alert("User called out " + currentPlayer + "!");
-    roundEnd(currentDiceNum, currentFaceVal, playerTurn[0], currentPlayer);
-}
-
-function brainacCallout(currentPlayer)
-{
-    // if more than 8 die is claimed
-    if(currentDiceNum > 8)
+    // if more than 2 turns have passed
+    if(currentTurn > 2)
     {
-        // call out next player
-        alert("Brainiac called out " + currentPlayer + "!");
-        roundEnd(currentDiceNum, currentFaceVal, playerTurn[1], currentPlayer);
-    }
-}
-
-function cowardCallout(currentPlayer)
-{
-    // if more than 5 turns have passed
-    if(turns > 5)
-    {
-        // callout current player
-        alert("Coward called out " + currentPlayer + "!");
-        roundEnd(currentDiceNum, currentFaceVal, playerTurn[2], currentPlayer);
-    }
-}
-
-function riskTakerCallout(currentPlayer)
-{
-    // if more than 3 turns have passed
-    if(turns > 3)
-    {
-        // generate a random number to decide if the callout happens
+        // generate a random number between 1 and 5 to decide if the callout happens
         let randomNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
-        if(randomNum = 5)
+        if(randomNum == 5)
         {
             // callout current player
-            alert("Risk Taker called out " + currentPlayer + "!");
-            roundEnd(currentDiceNum, currentFaceVal, playerTurn[3], currentPlayer);
+            currentPlayerName = playerTurn[currentPlayer].toString();
+            alert("Risk Taker called out " + currentPlayerName + "!");
+            callout(playerTurn[3]);
         }
+    }
+}
+
+// user guess is passed and displayed
+function userGuess()
+{
+    // get inputs
+    if(GUESS_DICE_NUM.value > currentDiceNum && GUESS_DICE_NUM.value >= 1 || GUESS_FACE_VAL.value > currentFaceVal && GUESS_FACE_VAL.value >= 1)
+    {
+        // update values and display the new guess, ensure this is an int
+        currentDiceNum = parseInt(GUESS_DICE_NUM.value);
+        currentFaceVal = parseInt(GUESS_FACE_VAL.value);
+        // display new info
+        displayGuess(ACTION_USER, playerTurn[0]);
+        updateGuess();
+        // let the opponents choose if they want to guess or not
+        riskTakerCallout();
+        brainacCallout();
+        cowardCallout();
+        // advance turn
+        advanceTurn();
+    }
+    else
+    {
+        // prompt the user to enter a valid option
+        alert("You must increase the amount or the face value of dice guesssed!");
+    }
+}
+
+// allow the user to call out the current player(NOT themself)
+function userCallout()
+{
+    // call out next player
+    currentPlayerName = playerTurn[currentPlayer].toString();
+    alert("User called out " + currentPlayerName + "!");
+    callout(playerTurn[0]);
+}
+
+// loop through turns
+function gameloop()
+{
+    // divvy out dice
+    //roundStart();
+    // get current player and run their guess code, or enable/disable user guesses
+    if(currentPlayerName == playerTurn[0])
+    {
+        // allow user to guess
+        enableButton(GUESS_BUTTON);
+    }
+    if(currentPlayerName == playerTurn[1])
+    {
+        // brainiac guesses, other players evaluate
+        brainiacGuess();
+        riskTakerCallout();
+        cowardCallout();
+        advanceTurn();
+    }
+    if(currentPlayerName == playerTurn[2])
+    {
+        // coward guesses, other players evaluate
+        cowardGuess();
+        riskTakerCallout();
+        brainacCallout();
+        advanceTurn();
+    }
+    if(currentPlayerName == playerTurn[3])
+    {
+        // risk taker guesses, other players evaluate
+        riskTakerGuess();
+        brainacCallout();
+        cowardCallout();
+        advanceTurn();
     }
 }
 
 function startGame()
 {
-    revealDice(userDice, userDiceBoard);
-    roundCount(rounds);
+    // reset rerolls
+    currentRerollAttempts = baseRerollAttempts;
+    // reset guess values
+    currentDiceNum = BASE_DICE_NUM;
+    currentFaceVal = BASE_FACE_VAL;
+    // set startingPlayer to user, set currentPlayer to startingPlayer
+    startingPlayer = 2;
+    currentPlayer = startingPlayer;
+    currentPlayerName = playerTurn[currentPlayer].toString();
+    // display reroll chances
+    updateInnerHTML(REROLL_CHANCES_DISPLAY, currentRerollAttempts);
+    // show current round
+    updateInnerHTML(ROUND_DISPLAY, rounds);
+    // show whose turn it is
+    updateInnerHTML(PLAYER_TURN_DISPLAY, currentPlayerName);
+    // reset and display points
+    pointsUser = 0;
+    pointsBrainac = 0;
+    pointsCoward = 0;
+    pointsRiskTaker = 0;
+    updateInnerHTML(POINTS_DISPLAY_USER, pointsUser);
+    updateInnerHTML(POINTS_DISPLAY_BRAINIAC, pointsBrainac);
+    updateInnerHTML(POINTS_DISPLAY_COWARD, pointsCoward);
+    updateInnerHTML(POINTS_DISPLAY_RISK_TAKER, pointsRiskTaker);
+    // give starting dice
+    roundStart();
+    // show user their dice
+    revealDice(diceArrayUser, DICE_BOARD_USER);
+    // add event listener to guess button
+    GUESS_BUTTON.addEventListener("click", userGuess());
+    // show current guess
+    updateGuess();
+    console.log("Turn " + currentTurn + "\n" + currentPlayerName);
+    // five rounds
+    // while(pointsUser < 6 && pointsBrainac < 6 && pointsCoward < 6 && pointsRiskTaker < 6)
+    // {
+    //     gameloop();
+    // }
 }
 
-roundStart();
+// start the game
 startGame();

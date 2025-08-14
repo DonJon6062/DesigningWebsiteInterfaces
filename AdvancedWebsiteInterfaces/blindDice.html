@@ -25,14 +25,10 @@
         </header>
     <main>
         <h1>
-            <!-- display round number -->
-            <span id="spanRound"></span><br>
-            <!-- display current guesser -->
-            <span id="spanPlayerTurn"></span><br>
-            <!-- display current guess -->
-            <span id="spanGuess"></span>
+            <!-- display round number, player turn and current guess -->
+            Round <span id="spanRound"></span><br><span id="spanPlayerTurn"></span> is guessing!<br>Current Guess: <span id="spanGuess"></span>
         </h1>
-        <div class="scoreSheet">
+        <div class="divScoreSheet">
             <!-- points and players -->
             <table>
             <tr>
@@ -42,52 +38,58 @@
             <!-- values -->
             <tr>
                 <td>User</td>
-                <td><span id="userPoints"></span></td>
+                <td><span id="spanUserPoints"></span></td>
             </tr>
             <tr>
                 <td>Brainac</td>
-                <td><span id="brainiacPoints"></span></td>
+                <td><span id="spanBrainiacPoints"></span></td>
             </tr>
             <tr>
                 <td>Coward</td>
-                <td><span id="cowardPoints"></span></td>
+                <td><span id="spanCowardPoints"></span></td>
             </tr>
             <tr>
                 <td>Risk-Taker</td>
-                <td><span id="riskTakerPoints"></span></td>
+                <td><span id="spanRiskTakerPoints"></span></td>
             </tr>
             </table>
+            <!-- rules of the game -->
+            <p>There are 20 die on the table.<br>The game ends when one player has 10 points.</br>Guesses must fufill one of two conditions:<br>1. More Dice<br>2. Higher Face Value</p>
         </div>
+        <h3>
         <section>
             <!-- brainac current action -->
-            <span id="brainiacAction"></span><br>
+            <span id="spanBrainiacAction"></span>&nbsp;<button id="accuseBrainiac" onclick="userCallout()">Test: Accuse Brainiac</button><br>
             <!-- where the dice board goes -->
-            <table id="brainiacDiceBoard"></table>
+            <table id="brainiacDiceBoard" class="diceBoard"></table>
             <!-- coward current action -->
-            <span id="cowardAction"></span><br>
+            <span id="spanCowardAction"></span>&nbsp;<button id="accuseCoward" onclick="userCallout()">Test: Accuse Coward</button><br>
             <!-- where the dice board goes -->
-            <table id="cowardDiceBoard"></table>
+            <table id="cowardDiceBoard" class="diceBoard"></table>
             <!-- risk taker current action -->
-            <span id="riskTakerAction"></span><br>
+            <span id="spanRiskTakerAction"></span>&nbsp;<button id="accuseRiskTaker" onclick="userCallout()">Test: Accuse Risk-Taker</button><br>
             <!-- where the dice board goes -->
-            <table id="riskTakerDiceBoard"></table>
-        </section>
-        <section class="userInformation">
+            <table id="riskTakerDiceBoard" class="diceBoard"></table>
+            <!-- user guess text -->
+            <span id="spanUserAction"></span><br>
+            <!-- where the dice board goes -->
+            <table id="userDiceBoard" class="diceBoard"></table><br>
+            <!-- where the inputs happen; mini section for the class -->
+            <section class="userInformation">
             <!-- where the user puts their guess; &nbsp; for spaces in between text -->
-            <input type="number" id="diceNumber" placeholder="Number of Dice"><label for id="diceFace">&nbsp;dice with a value of&nbsp;</label><input type="number" id="diceFace" placeholder="Dice Face Value"><button onclick="submit();">Submit</button>
+            <input type="number" id="inputDiceNum" min="1" max="20" value="1" required/><label for id="diceFace">&nbsp;dice with a value of&nbsp;</label><input type="number" id="inputFaceVal" min="1" max="6" placeholder="Dice Face Value" value="1" required>&nbsp;<button id="userGuessButton" onclick="userGuess();">Submit</button>
+            </section>
         </section>
-        <section>
-            <!-- where the dice board goes -->
-            <table id="userDiceBoard"></table>
-        </section>
-        <!-- functionality -->
-        <script src="blindDiceJS.js"></script>
+        </h3>
     </main>
     <footer>
-        <p><button onclick="reroll();">Re-Roll</button></p>
-        <!-- <span id="rerollChances"></span> <- if there's time, try again with this -->
-        <p>There are 20 die on the table.</p><p>The game ends when one player has 10 points.</p><p>You can reroll 3 times. You cannot reroll after the round starts until the round is over. Rerolls do not come back.</p>
-        <p>Guesses must fufill one of two conditions:</p><p>-More Dice</p><p>-Higher Face Value</p>
+        <button onclick="advanceTurn()">Test: Advance Turn</button>
+        <button onclick="riskTakerGuess()">Test: Risk Taker Turn</button>
+        <button onclick="cowardGuess()">Test: Coward Turn</button>
+        <button onclick="brainiacGuess()">Test: Brainac Turn</button>
+        <p><button onclick="reroll();">Re-Roll</button>&nbsp;<span id="spanRerollChances"></span> rolls left.<br>You cannot reroll after the round starts until the round is over.<br>Rerolls do not come back.</p>
     </footer>
+    <!-- functionality -->
+    <script src="blindDiceJS.js"></script>
 </body>
 </html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- add stylesheet -->
+    <link rel="stylesheet" href="blindDiceStylesheet.css">
+    <title>Blind Dice</title>
+</head>
+<body>
+    <!-- place items at top of screen -->
+        <header>
+            <!-- allow links to be added -->
+            <nav>
+                <!-- display link with style -->
+                <p>
+                    <!-- set link -->
+                    <a href="basicScreen.html">Go to the Basic Screen</a>
+                    <a href="checkerboard.html">Go to the Checkerboard</a>
+                    <a href="crossword.html">Go to Crossword</a>
+                    <a href="game.html">Go to the Game Setup</a>
+                    <a href="index.html">Go to the Index</a>
+                </p>
+            </nav>
+        </header>
+    <main>
+        <h1>
+            <!-- display round number, player turn and current guess -->
+            Round <span id="spanRound"></span><br><span id="spanPlayerTurn"></span> is guessing!<br>Current Guess: <span id="spanGuess"></span>
+        </h1>
+        <div class="divScoreSheet">
+            <!-- points and players -->
+            <table>
+            <tr>
+                <th>Player</th>
+                <th>Points</th>
+            </tr>
+            <!-- values -->
+            <tr>
+                <td>User</td>
+                <td><span id="spanUserPoints"></span></td>
+            </tr>
+            <tr>
+                <td>Brainac</td>
+                <td><span id="spanBrainiacPoints"></span></td>
+            </tr>
+            <tr>
+                <td>Coward</td>
+                <td><span id="spanCowardPoints"></span></td>
+            </tr>
+            <tr>
+                <td>Risk-Taker</td>
+                <td><span id="spanRiskTakerPoints"></span></td>
+            </tr>
+            </table>
+            <!-- rules of the game -->
+            <p>There are 20 die on the table.<br>The game ends when one player has 10 points.</br>Guesses must fufill one of two conditions:<br>1. More Dice<br>2. Higher Face Value
+            <!-- endless mode toggle -->
+            <br><input type="radio" id="endlessOff" name="endlessToggle" value="endlessOff" checked><label for id="endlessOff">First To 5</label>
+            <br><input type="radio" id="endlessOn" name="endlessToggle" value="endlessOn"><label for id="endlessOn">Endless</label>
+            </p>
+        </div>
+        <h3>
+        <section>
+            <!-- brainac current action -->
+            <span id="spanBrainiacAction"></span>&nbsp;<button id="calloutBrainiac" onclick="userCalloutBrainiac()">Callout</button>&nbsp;<button id="passBrainiac" onclick="opponentCallouts()">Pass</button><br>
+            <!-- where the dice board goes -->
+            <table id="brainiacDiceBoard" class="diceBoard"></table>
+            <!-- coward current action -->
+            <span id="spanCowardAction"></span>&nbsp;<button id="calloutCoward" onclick="userCalloutCoward()">Callout</button>&nbsp;<button id="passCoward" onclick="opponentCallouts()">Pass</button><br>
+            <!-- where the dice board goes -->
+            <table id="cowardDiceBoard" class="diceBoard"></table>
+            <!-- risk taker current action -->
+            <span id="spanRiskTakerAction"></span>&nbsp;<button id="calloutRiskTaker" onclick="userCalloutRiskTaker()">Callout</button>&nbsp;<button id="passRiskTaker" onclick="opponentCallouts()">Pass</button><br>
+            <!-- where the dice board goes -->
+            <table id="riskTakerDiceBoard" class="diceBoard"></table>
+            <!-- user guess text -->
+            <span id="spanUserAction"></span><br>
+            <!-- where the dice board goes -->
+            <table id="userDiceBoard" class="diceBoard"></table><br>
+            <!-- where the inputs happen; mini section for the class -->
+            <section class="userInformation">
+            <!-- where the user puts their guess; &nbsp; for spaces in between text -->
+            <input type="number" id="inputDiceNum" min="1" max="20" value="1" required/><label for id="diceFace">&nbsp;dice with a value of&nbsp;</label><input type="number" id="inputFaceVal" min="1" max="6" placeholder="Dice Face Value" value="1" required>&nbsp;<button id="userGuessButton" onclick="userGuess();">Submit</button>
+            </section>
+        </section>
+        </h3>
+    </main>
+    <footer>
+        <p><button onclick="reroll()">Re-Roll</button>&nbsp;<span id="spanRerollChances"></span> rolls left.<br>You cannot reroll after the round starts until the round is over.<br>Rerolls do not come back.</p>
+    </footer>
+    <!-- functionality -->
+    <script src="blindDiceJS.js"></script>
+</body>
+</html>

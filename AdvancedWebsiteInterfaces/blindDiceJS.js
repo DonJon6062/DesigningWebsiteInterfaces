@@ -689,22 +689,29 @@ function userGuess()
     }
 }
 
-// allow the user to call out the current player
-function userCallout()
+// allow the user to call out the current player (kept gettong wrong player so i'm just splitting this into three)
+function userCalloutBrainiac()
 {
-    // get id of button (the only button on <<hopefully>> as hideButton is called so, so often)
-    if(calloutBrainiacButton.style.visibility = 'visible')
-    {
-        currentPlayerName = playerTurn[1].toString();
-    }
-    if(calloutCowardButton.style.visibility = 'visible')
-    {
-        currentPlayerName = playerTurn[2].toString();
-    }
-    if(calloutRiskTakerButton.style.visibility = 'visible')
-    {
-       currentPlayerName = playerTurn[3].toString(); 
-    }
+    // set currentPlayerName to player called out
+    currentPlayerName = playerTurn[1];
+    // call out next player
+    alert("User called out " + currentPlayerName + "!");
+    callout(playerTurn[0]);
+}
+
+function userCalloutCoward()
+{
+    // set currentPlayerName to player called out
+    currentPlayerName = playerTurn[2];
+    // call out player
+    alert("User called out " + currentPlayerName + "!");
+    callout(playerTurn[0]);
+}
+
+function userCalloutRiskTaker()
+{
+    // set currentPlayerName to player called out
+    currentPlayerName = playerTurn[3];
     // call out next player
     alert("User called out " + currentPlayerName + "!");
     callout(playerTurn[0]);

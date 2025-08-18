@@ -54,7 +54,7 @@
             </tr>
             </table>
             <!-- rules of the game -->
-            <p>There are 20 die on the table.<br>The game ends when one player has 10 points.</br>Guesses must fufill one of two conditions:<br>1. More Dice<br>2. Higher Face Value
+            <p>There are 20 die on the table.<br>The game ends when one player has 5 points.</br>Guesses must fufill one of two conditions:<br>1. More Dice<br>2. Higher Face Value
             <!-- endless mode toggle -->
             <br><input type="radio" id="endlessOff" name="endlessToggle" value="endlessOff" checked><label for id="endlessOff">First To 5</label>
             <br><input type="radio" id="endlessOn" name="endlessToggle" value="endlessOn"><label for id="endlessOn">Endless</label>
@@ -63,15 +63,15 @@
         <h3>
         <section>
             <!-- brainac current action -->
-            <span id="spanBrainiacAction"></span>&nbsp;<button id="calloutBrainiac" onclick="userCallout()">Callout</button>&nbsp;<button id="passBrainiac" onclick="opponentCallouts()">Pass</button><br>
+            <span id="spanBrainiacAction"></span>&nbsp;<button id="calloutBrainiac" onclick="userCalloutBrainiac()">Callout</button>&nbsp;<button id="passBrainiac" onclick="opponentCallouts()">Pass</button><br>
             <!-- where the dice board goes -->
             <table id="brainiacDiceBoard" class="diceBoard"></table>
             <!-- coward current action -->
-            <span id="spanCowardAction"></span>&nbsp;<button id="calloutCoward" onclick="userCallout()">Callout</button>&nbsp;<button id="passCoward" onclick="opponentCallouts()">Pass</button><br>
+            <span id="spanCowardAction"></span>&nbsp;<button id="calloutCoward" onclick="userCalloutCoward()">Callout</button>&nbsp;<button id="passCoward" onclick="opponentCallouts()">Pass</button><br>
             <!-- where the dice board goes -->
             <table id="cowardDiceBoard" class="diceBoard"></table>
             <!-- risk taker current action -->
-            <span id="spanRiskTakerAction"></span>&nbsp;<button id="calloutRiskTaker" onclick="userCallout()">Callout</button>&nbsp;<button id="passRiskTaker" onclick="opponentCallouts()">Pass</button><br>
+            <span id="spanRiskTakerAction"></span>&nbsp;<button id="calloutRiskTaker" onclick="userCalloutRiskTaker()">Callout</button>&nbsp;<button id="passRiskTaker" onclick="opponentCallouts()">Pass</button><br>
             <!-- where the dice board goes -->
             <table id="riskTakerDiceBoard" class="diceBoard"></table>
             <!-- user guess text -->
@@ -87,7 +87,7 @@
         </h3>
     </main>
     <footer>
-        <p><button onclick="reroll();">Re-Roll</button>&nbsp;<span id="spanRerollChances"></span> rolls left.<br>You cannot reroll after the round starts until the round is over.<br>Rerolls do not come back.</p>
+        <p><button onclick="reroll()">Re-Roll</button>&nbsp;<span id="spanRerollChances"></span> rolls left.<br>You cannot reroll after the round starts until the round is over.<br>Rerolls do not come back.</p>
     </footer>
     <!-- functionality -->
     <script src="blindDiceJS.js"></script>
